@@ -80,7 +80,8 @@ packages:
   images: !include modules/base/images.yaml
   time: !include modules/base/time_homeassistant.yaml
   sensors: !include modules/sensors/sensors_base-SDL.yaml
-  theme_style: !include modules/base/theme_style_debug.yaml
+  theme_style: !include modules/base/theme_style.yaml
+  # theme_style: !include modules/base/theme_style_debug.yaml
   
   # Harware description file
   hardware: !include modules/hardware/SDL-lvgl.yaml
