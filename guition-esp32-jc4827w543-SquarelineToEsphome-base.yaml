@@ -1,0 +1,272 @@
+# Substitution variables used through the codebase
+substitutions:
+  text_font: roboto18
+  text_color: black
+  bg_color: white
+  button_on_color: "ep_orange"
+  button_off_color: "very_dark_gray"
+  icon_on_color: "yellow"
+  icon_off_color: "gray"
+  label_on_color: "white"
+  label_off_color: "gray"
+  button_text_color: "white"
+  button_height_single: '109px'
+  button_height_double: '228px'
+  button_width: '150px'
+  touchscreen_idle_timeout: "30s"
+  touchscreen_daytime_brightness: "100%"
+  touchscreen_nighttime_brightness: "50%"
+  # Boot screen configuration
+  boot_screen_delay: 60s
+
+  # Set Night mode  at Mightnight
+  screen_night_hour: '0'
+  screen_night_minute: '0'
+
+  # Set Day mode at 5:30am
+  screen_day_hour: '5'
+  screen_day_minute: '30'
+  # Screen Size
+  screen_height: '272px'
+  screen_width: '480px'
+
+esphome:
+  name: humidistat
+  friendly_name: "humidistat"
+
+api:  
+  
+script:
+  - id: time_update
+    then:
+      - lvgl.label.update:
+          id: date_label
+          text: !lambda |- # Month Day
+            auto time = id(system_time).now();
+            int day = time.day_of_month;
+            char strftime_buf[64];
+            snprintf(strftime_buf, sizeof(strftime_buf), "%s %d", time.strftime("%B").c_str(), day);
+            return {strftime_buf};
+      - lvgl.label.update:
+          id: time_label
+          text: !lambda 'return id(system_time).now().strftime("%l:%M");'
+
+packages:
+  # Generic configuration for ESP32 screens
+  # If you need Wi-Fi include this
+  wifi: !include modules/base/wifi.yaml
+  # Basic ESP 32 stuff
+  base: !include modules/base/base.yaml
+  # If your touch screen has a backlight include this
+  backlight: !include modules/base/backlignt.yaml
+  # All the colors
+  colors: !include modules/base/color.yaml
+  # Your Images
+  sensors: !include modules/sensors/sensors_base.yaml
+  # Styles + Themes
+  theme_style: !include modules/base/theme_style.yaml
+  # theme_style: !include modules/base/theme_style_debug.yaml
+
+  # Harware description file
+  hardware: !include modules/hardware/guiton-esp32-jc4827w543.yaml
+  
+  weather_icons_50: !include
+    file: modules/weather/weather_icons.yaml
+    vars:
+      size: 50
+  # Get todays weather and display it
+
+  lvgl: !include squareline_generated.yaml
+
+text_sensor:
+  - platform: homeassistant
+    entity_id: weather.home
+    id: weather_condition
+    on_value:
+        then:  !include { file: modules/weather/weather_icons_update.yaml, vars: { size: "50", id: weather_condition_icon, input_id: weather_condition  } }
+
+  - platform: homeassistant
+    entity_id: weather.home
+    attribute: temperature
+    id: outdoor_temperature
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: outdoor_temperature_label
+              text:
+                format: "%s"
+                args: [ 'id(outdoor_temperature).state.c_str()' ]
+                
+  - platform: homeassistant
+    entity_id: weather.home
+    attribute: humidity
+    id: outdoor_humidity
+    on_value:
+        then:
+          - lvgl.label.update:
+              id: outdoor_humidity_label
+              text:
+                format: "%s"
+                args: [ 'id(outdoor_humidity).state.c_str()' ]
+
+  - platform: homeassistant
+    entity_id: weather.home
+    attribute: dew_point
+    id: outdoor_dew_point
+    on_value:
+        then:
+          - lvgl.label.update:
+              id: outdoor_dew_point_label
+              text:
+                format: "%s"
+                args: [ 'id(outdoor_dew_point).state.c_str()' ]                   
+
+#-------------------------------------------
+#  Qwiic connector
+#-------------------------------------------
+i2c:
+  - id: bus_b
+    sda: 17
+    scl: 18
+    scan: true
+    
+#-------------------------------------------
+#  sht45 attached to Qwiic connector
+#-------------------------------------------    
+sensor:
+  - platform: sht4x
+    i2c_id: bus_b
+    temperature:
+      id: indoor_temperature
+      name: Indoor Temperature
+      filters:
+        - lambda: return x * 1.8 + 32.0;
+      unit_of_measurement: "°F"
+      on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: indoor_temp_label
+              text:
+                format: "%.1f"
+                args: [ 'id(indoor_temperature).state' ]                
+    humidity:
+      name: Indoor Humidity
+      id: indoor_humidity
+      on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: indoor_humidity_label
+              text:
+                format: "%.1f"
+                args: [ 'id(indoor_humidity).state' ]
+
+  - platform: template
+    id: indoor_dew_point
+    name: "Indoor Dew Point"
+    unit_of_measurement: "°F"
+    icon: mdi:water-percent
+    accuracy_decimals: 1
+    update_interval: 5s # Adjust as needed, e.g., match your SHT4x update interval
+    lambda: |-
+      float temperature_c = (id(indoor_temperature).state - 32.0) / 1.8; // Convert °F to °C
+      float relative_humidity = id(indoor_humidity).state;
+
+      // Magnus formula constants
+      float a = 17.27;
+      float b = 237.7;
+
+      float alpha = ((a * temperature_c) / (b + temperature_c)) + log(relative_humidity / 100.0);
+      float dew_point_c = (b * alpha) / (a - alpha);
+
+      return (dew_point_c * 1.8) + 32.0; // Convert °C to °F
+    
+    # Optional: If you want to display the dew point on an LVGL label
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: indoor_dew_point_label # You'll need to define this ID in your LVGL setup
+            text:
+              format: "%.1f"
+              args: [ 'id(indoor_dew_point).state' ]                
+
+# -------------------------------------------------------------------------
+# LVGL pages
+# -------------------------------------------------------------------------
+lvgl:
+# Boot screen
+  top_layer: !include
+    file: modules/screens/boot_screen_272x480.yaml
+    vars:
+      height: $screen_height
+      width: $screen_width 
+
+
+font:
+  - file: "gfonts://Roboto" 
+    id: roboto84
+    size: 84
+    bpp: 8
+    glyphs: [ # Optomized for space
+      0123456789,
+      F,
+      C,
+      ":",
+      ".",
+      "°",
+      "\u0025", # %
+      "\u0020", # space
+      "\u002C", # ,
+      ]
+
+  - file: "gfonts://Roboto"
+    id: roboto48
+    size: 48
+    bpp: 8
+    glyphs: [  # Optomized for space
+      0123456789,
+      F,
+      C,
+      ":",
+      ".",
+      "°",
+      "\u0025", # %
+      "\u0020", # space
+      "\u002C", # ,
+      ]  
+   
+  - file: "gfonts://Roboto"
+    id: roboto24
+    size: 24
+    bpp: 8
+    glyphs: [  # Optomized for space
+      0123456789,
+      F,
+      C,
+      ":",
+      ".",
+      "°",
+      "\u0025", # %
+      "\u0020", # space
+      "\u002C", # ,
+      ]  
+
+  - file: "gfonts://Roboto"
+    id: roboto18
+    size: 18
+    bpp: 8
+
+  - file: "gfonts://Roboto"
+    id: roboto14
+    size: 14
+    bpp: 8
+   
+
+image:
+  - file: https://esphome.io/_static/logo-text-on-light.svg
+    id: boot_logo_20px
+    resize: 100x20  # aspect ratio 5
+    type: RGB565
+    transparency: alpha_channel    

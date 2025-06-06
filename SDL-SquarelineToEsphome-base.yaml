@@ -1,0 +1,95 @@
+# Substitution variables used through the codebase
+substitutions:
+  lightbulb:         "\U000F0335"
+  ceiling_light:     "\U000F0769"
+  lamp:              "\U000F06B5"
+  floor_lamp:        "\U000F08DD"
+  string_lights:     "\U000F12BA"
+  track_light:       "\U000F0914"
+  bulkhead_light:    "\U000F1A2F"
+  led_strip:         "\U000F07D6"
+  coach_lamp:        "\U000F1020"
+  ceiling_fan_light: "\U000F1798"
+  bed:               "\U000F02E3"
+  sunny:             "\U000F05A8"
+
+  icon_font: light40
+  text_font: roboto24
+  text_color: black
+  bg_color: white
+  button_on_color: "ep_orange"
+  button_off_color: "very_dark_gray"
+  icon_on_color: "yellow"
+  icon_off_color: "gray"
+  label_on_color: "white"
+  label_off_color: "gray"
+  button_text_color: "white"
+  button_height_single: '109px'
+  button_height_double: '228px'
+  button_width: '150px'
+  touchscreen_idle_timeout: "30s"
+  touchscreen_daytime_brightness: "100%"
+  touchscreen_nighttime_brightness: "50%"
+  # Boot screen configuration
+  boot_screen_delay: 60s
+
+  # Set Night mode  at Mightnight
+  screen_night_hour: '0'
+  screen_night_minute: '0'
+
+  # Set Day mode at 5:30am
+  screen_day_hour: '5'
+  screen_day_minute: '30'
+  # Screen Size
+  screen_height: '272px'
+  screen_width: '480px'
+  sdl_height: '272'
+  sdl_width: '480'
+
+
+
+esphome:
+  name: squarelinetest
+  friendly_name: "SquarelineToEsphome"
+
+host:
+  mac_address: "62:23:45:AF:B3:05"
+  
+api:  
+  
+script:
+  - id: time_update
+    then:
+      - lvgl.label.update:
+          id: date_label
+          text: !lambda |- # Month Day
+            auto time = id(system_time).now();
+            int day = time.day_of_month;
+            char strftime_buf[64];
+            snprintf(strftime_buf, sizeof(strftime_buf), "%s %d", time.strftime("%B").c_str(), day);
+            return {strftime_buf};
+      - lvgl.label.update:
+          id: time_label
+          text: !lambda 'return id(system_time).now().strftime("%l:%M");'
+
+packages:
+  # Generic configuration for ESP32 screens
+  # wifi: !include modules/base/wifi.yaml
+  colors: !include modules/base/color.yaml
+  fonts: !include modules/base/fonts.yaml
+  images: !include modules/base/images.yaml
+  time: !include modules/base/time_homeassistant.yaml
+  sensors: !include modules/sensors/sensors_base-SDL.yaml
+  theme_style: !include modules/base/theme_style_debug.yaml
+  
+  # Harware description file
+  hardware: !include modules/hardware/SDL-lvgl.yaml
+  
+  lvgl: !include squareline_generated.yaml
+  
+image:
+  - file: modules/assets/dummy_image.png
+    id: dummy_image_50
+    resize: 50x50
+    type: RGB565
+    transparency: alpha_channel  
