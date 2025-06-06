@@ -74,23 +74,91 @@ script:
 
 packages:
   # Generic configuration for ESP32 screens
-  # wifi: !include modules/base/wifi.yaml
-  colors: !include modules/base/color.yaml
-  fonts: !include modules/base/fonts.yaml
-  images: !include modules/base/images.yaml
-  time: !include modules/base/time_homeassistant.yaml
-  sensors: !include modules/sensors/sensors_base-SDL.yaml
-  theme_style: !include modules/base/theme_style.yaml
-  # theme_style: !include modules/base/theme_style_debug.yaml
+  # wifi: !include esphome-modular-lvgl-buttons/modules/base/wifi.yaml
+  colors: !include esphome-modular-lvgl-buttons/modules/base/color.yaml
+  time: !include esphome-modular-lvgl-buttons/modules/base/time_homeassistant.yaml
+  sensors: !include esphome-modular-lvgl-buttons/modules/sensors/sensors_base-SDL.yaml
+  theme_style: !include esphome-modular-lvgl-buttons/modules/base/theme_style.yaml
+  # theme_style: !include esphome-modular-lvgl-buttons/modules/base/theme_style_debug.yaml
   
   # Harware description file
-  hardware: !include modules/hardware/SDL-lvgl.yaml
+  hardware: !include esphome-modular-lvgl-buttons/modules/hardware/SDL-lvgl.yaml
   
   lvgl: !include squareline_generated.yaml
   
+lvgl:
+# Boot screen
+  top_layer: !include
+    file: esphome-modular-lvgl-buttons/modules/screens/boot_screen_272x480.yaml
+    vars:
+      height: $screen_height
+      width: $screen_width 
+
+
+font:
+  - file: "gfonts://Roboto" 
+    id: roboto84
+    size: 84
+    bpp: 8
+    glyphs: [ # Optomized for space
+      0123456789,
+      F,
+      C,
+      ":",
+      ".",
+      "°",
+      "\u0025", # %
+      "\u0020", # space
+      "\u002C", # ,
+      ]
+
+  - file: "gfonts://Roboto"
+    id: roboto48
+    size: 48
+    bpp: 8
+    glyphs: [  # Optomized for space
+      0123456789,
+      F,
+      C,
+      ":",
+      ".",
+      "°",
+      "\u0025", # %
+      "\u0020", # space
+      "\u002C", # ,
+      ]  
+   
+  - file: "gfonts://Roboto"
+    id: roboto24
+    size: 24
+    bpp: 8
+    glyphs: [  # Optomized for space
+      0123456789,
+      F,
+      C,
+      ":",
+      ".",
+      "°",
+      "\u0025", # %
+      "\u0020", # space
+      "\u002C", # ,
+      ]  
+
+  - file: "gfonts://Roboto"
+    id: roboto18
+    size: 18
+    bpp: 8
+
+  - file: "gfonts://Roboto"
+    id: roboto14
+    size: 14
+    bpp: 8
+   
+
 image:
-  - file: modules/assets/dummy_image.png
-    id: dummy_image_50
-    resize: 50x50
+  - file: https://esphome.io/_static/logo-text-on-light.svg
+    id: boot_logo_20px
+    resize: 100x20  # aspect ratio 5
     type: RGB565
-    transparency: alpha_channel  
+    transparency: alpha_channel    
+
