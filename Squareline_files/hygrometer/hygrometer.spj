@@ -1634,7 +1634,7 @@
                           {
                             "nid": 70,
                             "strtype": "OBJECT/Align",
-                            "strval": "CENTER",
+                            "strval": "RIGHT_MID",
                             "InheritedType": 3
                           },
                           {
@@ -1792,7 +1792,7 @@
                           {
                             "nid": 70,
                             "strtype": "OBJECT/Align",
-                            "strval": "CENTER",
+                            "strval": "LEFT_MID",
                             "InheritedType": 3
                           },
                           {
@@ -2086,7 +2086,7 @@
                           {
                             "nid": 70,
                             "strtype": "OBJECT/Align",
-                            "strval": "CENTER",
+                            "strval": "RIGHT_MID",
                             "InheritedType": 3
                           },
                           {
@@ -2244,7 +2244,7 @@
                           {
                             "nid": 70,
                             "strtype": "OBJECT/Align",
-                            "strval": "CENTER",
+                            "strval": "LEFT_MID",
                             "InheritedType": 3
                           },
                           {
@@ -2538,7 +2538,7 @@
                           {
                             "nid": 70,
                             "strtype": "OBJECT/Align",
-                            "strval": "CENTER",
+                            "strval": "RIGHT_MID",
                             "InheritedType": 3
                           },
                           {
@@ -2696,7 +2696,7 @@
                           {
                             "nid": 70,
                             "strtype": "OBJECT/Align",
-                            "strval": "CENTER",
+                            "strval": "LEFT_MID",
                             "InheritedType": 3
                           },
                           {
@@ -3800,7 +3800,7 @@
                           {
                             "nid": 70,
                             "strtype": "OBJECT/Align",
-                            "strval": "CENTER",
+                            "strval": "RIGHT_MID",
                             "InheritedType": 3
                           },
                           {
@@ -3959,7 +3959,7 @@
                           {
                             "nid": 70,
                             "strtype": "OBJECT/Align",
-                            "strval": "CENTER",
+                            "strval": "LEFT_MID",
                             "InheritedType": 3
                           },
                           {
@@ -4633,7 +4633,7 @@
     "uiExportFolderPath": "",
     "projectExportFolderPath": "",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 37,
+    "backup_cnt": 38,
     "autosave_cnt": 0,
     "group_color_cnt": 0,
     "lvgl_version": "8.3.11",
