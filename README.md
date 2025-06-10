@@ -20,7 +20,7 @@ git clone https://github.com/agillis/esphome-hygrometer.git
 uv run ./SquarelineToEsphome/squareline_to_esphome ./esphome-hygrometer/Squareline_files/hygrometer/hydro.spj -o ./squareline_generated.yaml
 ```
 
-You can test your code using SDL on a PC or mac. Lot of info in that here https://esphome.io/components/display/sdl.html
+You can test your code using SDL on a PC or mac. There is a lot of info on that here https://esphome.io/components/display/sdl.html
 
 ```
 cp esphome-hygrometer/SDL-SquarelineToEsphome-base.yaml .
