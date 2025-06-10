@@ -54,24 +54,24 @@ script:
 packages:
   # Generic configuration for ESP32 screens
   # If you need Wi-Fi include this
-  wifi: !include modules/base/wifi.yaml
+  wifi: !include esphome-modular-lvgl-buttons/modules/base/wifi.yaml
   # Basic ESP 32 stuff
-  base: !include modules/base/base.yaml
+  base: !include esphome-modular-lvgl-buttons/modules/base/base.yaml
   # If your touch screen has a backlight include this
-  backlight: !include modules/base/backlignt.yaml
+  backlight: !include esphome-modular-lvgl-buttons/modules/base/backlignt.yaml
   # All the colors
-  colors: !include modules/base/color.yaml
+  colors: !include esphome-modular-lvgl-buttons/modules/base/color.yaml
   # Your Images
-  sensors: !include modules/sensors/sensors_base.yaml
+  sensors: !include esphome-modular-lvgl-buttons/modules/sensors/sensors_base.yaml
   # Styles + Themes
-  theme_style: !include modules/base/theme_style.yaml
-  # theme_style: !include modules/base/theme_style_debug.yaml
+  theme_style: !include esphome-modular-lvgl-buttons/modules/base/theme_style.yaml
+  # theme_style: !include esphome-modular-lvgl-buttons/modules/base/theme_style_debug.yaml
 
   # Harware description file
-  hardware: !include modules/hardware/guiton-esp32-jc4827w543.yaml
+  hardware: !include esphome-modular-lvgl-buttons/modules/hardware/guiton-esp32-jc4827w543.yaml
   
   weather_icons_50: !include
-    file: modules/weather/weather_icons_web.yaml
+    file: esphome-modular-lvgl-buttons/modules/weather/weather_icons_web.yaml
     vars:
       size: 50
   # Get todays weather and display it
@@ -83,7 +83,7 @@ text_sensor:
     entity_id: weather.home
     id: weather_condition
     on_value:
-        then:  !include { file: modules/weather/weather_icons_update.yaml, vars: { size: "50", id: weather_condition_icon, input_id: weather_condition  } }
+        then:  !include { file: esphome-modular-lvgl-buttons/modules/weather/weather_icons_update.yaml, vars: { size: "50", id: weather_condition_icon, input_id: weather_condition  } }
 
   - platform: homeassistant
     entity_id: weather.home
@@ -198,7 +198,7 @@ sensor:
 lvgl:
 # Boot screen
   top_layer: !include
-    file: modules/screens/boot_screen_272x480.yaml
+    file: esphome-modular-lvgl-buttons/modules/screens/boot_screen_272x480.yaml
     vars:
       height: $screen_height
       width: $screen_width 

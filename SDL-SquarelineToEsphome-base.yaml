@@ -1,20 +1,6 @@
 # Substitution variables used through the codebase
 substitutions:
-  lightbulb:         "\U000F0335"
-  ceiling_light:     "\U000F0769"
-  lamp:              "\U000F06B5"
-  floor_lamp:        "\U000F08DD"
-  string_lights:     "\U000F12BA"
-  track_light:       "\U000F0914"
-  bulkhead_light:    "\U000F1A2F"
-  led_strip:         "\U000F07D6"
-  coach_lamp:        "\U000F1020"
-  ceiling_fan_light: "\U000F1798"
-  bed:               "\U000F02E3"
-  sunny:             "\U000F05A8"
-
-  icon_font: light40
-  text_font: roboto24
+  text_font: roboto18
   text_color: black
   bg_color: white
   button_on_color: "ep_orange"
