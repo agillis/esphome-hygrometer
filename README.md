@@ -1,5 +1,7 @@
 I built this using SquareLine Studio and the SquareLine to ESPHome converter. It was a fast build due the the simplicty of Squarline Studio.
 
+## Install and build
+
 Step one is to create a secrets.yaml. This is what mine looks like 
 
 ```
@@ -32,9 +34,22 @@ cp esphome-hygrometer/guition-esp32-jc4827w543-SquarelineToEsphome-base.yaml .
 esphome run guition-esp32-jc4827w543-SquarelineToEsphome-base.yaml
 ```
 
+## History
+
 This demo is based on a commercial screen that I like the look of.
 
 ![InkBird](pictures/inkbird.png)
 
+I recreated it in Squareline. It was very easy. I can set most of the objects to layout type flex so everything sort of floats to the right place. NO pixel counting!!
 
+![Squareline test](pictures/iSquareline_test.png)
 
+I use SDL to test my design on a PC or MAC. I’m planning to use a color screen so I added a color background.
+
+![SDL test](pictures/SDL_test.png)
+
+Then I loaded it to a Guition jc4827w543 ($20 USD). I attached a very accurate humidity + temp sensor so I can get local values. I also used Accuweather to get today outdoor weather+ Due Point.
+
+![hardware test](pictures/hardware_test.png)
+
+I’m very interested in the dew point. An indoor due point of greater then 55 degrees F will cause mold. So I want to run my dehumidifier at that point.
