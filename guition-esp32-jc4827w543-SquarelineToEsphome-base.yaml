@@ -71,7 +71,7 @@ packages:
   hardware: !include modules/hardware/guiton-esp32-jc4827w543.yaml
   
   weather_icons_50: !include
-    file: modules/weather/weather_icons.yaml
+    file: modules/weather/weather_icons_web.yaml
     vars:
       size: 50
   # Get todays weather and display it
