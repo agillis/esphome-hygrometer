@@ -24,3 +24,11 @@ You can test your code using SDL on a PC or mac. Lot of info in that here https:
 cp esphome-hygrometer/SDL-SquarelineToEsphome-base.yaml .
 esphome run SDL-SquarelineToEsphome-base.yaml
 ```
+
+After you get it working install to a hardware screen. I used a guition jc4827w543. This is not the best screen I have worked with. It only has 4mb ot RAM so ESPHome can only use 2mb (you need to save half for OTA updates. But with some very optimized code I got LVGL working and also an i2c temperature sensor + relitive humidity. This screen does have an a Qwiic connector so you can add Qwiic I2c devices with no soldering.
+
+```
+cp esphome-hygrometer/guition-esp32-jc4827w543-SquarelineToEsphome-base.yaml .
+esphome run guition-esp32-jc4827w543-SquarelineToEsphome-base.yaml
+```
+
