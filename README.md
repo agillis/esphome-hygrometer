@@ -42,7 +42,7 @@ This demo is based on a commercial screen that I like the look of.
 
 I recreated it in Squareline. It was very easy. I can set most of the objects to layout type flex so everything sort of floats to the right place. NO pixel counting!!
 
-![Squareline test](pictures/iSquareline_test.png)
+![Squareline test](pictures/Squareline_test.png)
 
 I use SDL to test my design on a PC or MAC. I’m planning to use a color screen so I added a color background.
 
