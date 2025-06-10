@@ -34,7 +34,7 @@ esphome run guition-esp32-jc4827w543-SquarelineToEsphome-base.yaml
 
 This demo is based on a commercial screen that I like the look of.
 
-![InkBird](pictures/inkbird.png")
+![InkBird](pictures/inkbird.png)
 
 
 
