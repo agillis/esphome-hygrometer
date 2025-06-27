@@ -34,7 +34,14 @@ esphome:
   name: humidistat
   friendly_name: "humidistat"
 
-api:  
+api:
+
+logger:
+#  level: info
+#  logs:
+#    i2c.idf: info
+#    touchscreen: info
+#    scheduler: none  
   
 script:
   - id: time_update
@@ -55,8 +62,6 @@ packages:
   # Generic configuration for ESP32 screens
   # If you need Wi-Fi include this
   wifi: !include esphome-modular-lvgl-buttons/modules/base/wifi.yaml
-  # Basic ESP 32 stuff
-  base: !include esphome-modular-lvgl-buttons/modules/base/base.yaml
   # If your touch screen has a backlight include this
   backlight: !include esphome-modular-lvgl-buttons/modules/base/backlignt.yaml
   # All the colors
@@ -69,6 +74,9 @@ packages:
 
   # Harware description file
   hardware: !include esphome-modular-lvgl-buttons/modules/hardware/guiton-esp32-jc4827w543.yaml
+  
+  # Basic boot screen with ESPHome logo and device diagnostic info
+  boot_screen: !include esphome-modular-lvgl-buttons/modules/screens/boot_screen_272x480.yaml
   
   weather_icons_50: !include
     file: esphome-modular-lvgl-buttons/modules/weather/weather_icons_web.yaml
@@ -196,12 +204,6 @@ sensor:
 # LVGL pages
 # -------------------------------------------------------------------------
 lvgl:
-# Boot screen
-  top_layer: !include
-    file: esphome-modular-lvgl-buttons/modules/screens/boot_screen_272x480.yaml
-    vars:
-      height: $screen_height
-      width: $screen_width 
 
 
 font:
@@ -262,11 +264,4 @@ font:
     id: roboto14
     size: 14
     bpp: 8
-   
 
-image:
-  - file: https://esphome.io/_static/logo-text-on-light.svg
-    id: boot_logo_20px
-    resize: 100x20  # aspect ratio 5
-    type: RGB565
-    transparency: alpha_channel    

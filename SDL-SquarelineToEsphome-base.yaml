@@ -33,15 +33,12 @@ substitutions:
   sdl_width: '480'
 
 
-
 esphome:
   name: squarelinetest
   friendly_name: "SquarelineToEsphome"
 
 host:
   mac_address: "62:23:45:AF:B3:05"
-  
-api:  
   
 script:
   - id: time_update
@@ -58,28 +55,36 @@ script:
           id: time_label
           text: !lambda 'return id(system_time).now().strftime("%l:%M");'
 
+api:
+
+logger:
+#  level: info
+#  logs:
+#    i2c.idf: info
+#    touchscreen: info
+#    scheduler: none
+
+
 packages:
   # Generic configuration for ESP32 screens
+  # SDL has no Wi-Fi
   # wifi: !include esphome-modular-lvgl-buttons/modules/base/wifi.yaml
+  # All the colors
   colors: !include esphome-modular-lvgl-buttons/modules/base/color.yaml
-  time: !include esphome-modular-lvgl-buttons/modules/base/time_homeassistant.yaml
+  # Some basic sensors
   sensors: !include esphome-modular-lvgl-buttons/modules/sensors/sensors_base-SDL.yaml
+  # Styles + Themes
   theme_style: !include esphome-modular-lvgl-buttons/modules/base/theme_style.yaml
-  # theme_style: !include esphome-modular-lvgl-buttons/modules/base/theme_style_debug.yaml
-  
+  # Get correct time from homeassistant
+  time: !include esphome-modular-lvgl-buttons/modules/base/time_homeassistant.yaml
+
   # Harware description file
   hardware: !include esphome-modular-lvgl-buttons/modules/hardware/SDL-lvgl.yaml
+
+  # Basic boot screen with ESPHome logo and device diagnostic info
+  boot_screen: !include esphome-modular-lvgl-buttons/modules/screens/boot_screen_272x480.yaml
   
   lvgl: !include squareline_generated.yaml
-  
-lvgl:
-# Boot screen
-  top_layer: !include
-    file: esphome-modular-lvgl-buttons/modules/screens/boot_screen_272x480.yaml
-    vars:
-      height: $screen_height
-      width: $screen_width 
-
 
 font:
   - file: "gfonts://Roboto" 
@@ -139,12 +144,3 @@ font:
     id: roboto14
     size: 14
     bpp: 8
-   
-
-image:
-  - file: https://esphome.io/_static/logo-text-on-light.svg
-    id: boot_logo_20px
-    resize: 100x20  # aspect ratio 5
-    type: RGB565
-    transparency: alpha_channel    
-
