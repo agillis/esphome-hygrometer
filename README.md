@@ -7,8 +7,8 @@ Step one is to create a secrets.yaml. This is what mine looks like
 ```
 wifi_ssid: "FBIvan05"
 wifi_password: "VerySeceret!"
-latitude: 38.897957
-longitude: -77.036560
+latitude: 22.897957
+longitude: -27.036560
 ```
 
 Next install the Squareline to ESPhome libary, the LVGL ESPhome libary and the libary for this screen.
