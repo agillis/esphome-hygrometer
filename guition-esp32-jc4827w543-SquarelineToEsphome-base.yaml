@@ -73,7 +73,7 @@ packages:
   # theme_style: !include esphome-modular-lvgl-buttons/modules/base/theme_style_debug.yaml
 
   # Harware description file
-  hardware: !include esphome-modular-lvgl-buttons/modules/hardware/guiton-esp32-jc4827w543.yaml
+  hardware: !include esphome-modular-lvgl-buttons/modules/hardware/guition-esp32-jc4827w543.yaml
   
   # Basic boot screen with ESPHome logo and device diagnostic info
   boot_screen: !include esphome-modular-lvgl-buttons/modules/screens/boot_screen_272x480.yaml
