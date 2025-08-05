@@ -17,7 +17,8 @@ Next install the Squareline to ESPhome libary, the LVGL ESPhome libary and the l
 git clone https://github.com/gpambrozio/SquarelineToEsphome.git
 git clone https://github.com/agillis/esphome-modular-lvgl-buttons.git
 git clone https://github.com/agillis/esphome-hygrometer.git
-uv run ./SquarelineToEsphome/squareline_to_esphome ./esphome-hygrometer/Squareline_files/hygrometer/hygrometer.spj -o ./squareline_generated.yaml
+cd ./SquarelineToEsphome
+uv run squareline_to_esphome ../esphome-hygrometer/Squareline_files/hygrometer/hygrometer.spj -o ../squareline_generated.yaml
 ```
 
 You can test your code using SDL on a PC or mac. There is a lot of info on that here https://esphome.io/components/display/sdl.html
